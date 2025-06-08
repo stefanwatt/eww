@@ -1,0 +1,124 @@
+;; Weather vars
+(defpoll current-year :interval "60m"
+  :initial 25
+  `date +%y`
+)
+
+(defpoll current-month :interval "60m"
+  :initial 01
+  `date +%m`
+)
+(defpoll LAST_UPDATED :interval "10s" `$HOME/.config/eww/scripts/weather.sh --last-updated`)
+(defpoll ICON :interval "10s" `$HOME/.config/eww/scripts/weather.sh --icon`)
+(defpoll STAT :interval "10s" `$HOME/.config/eww/scripts/weather.sh --stat`)
+(defpoll TEMP :interval "10s" `$HOME/.config/eww/scripts/weather.sh --temp`)
+(defpoll HEX :interval "10s" `$HOME/.config/eww/scripts/weather.sh --hex`)
+(defpoll QUOTE :interval "10s" `$HOME/.config/eww/scripts/weather.sh --quote`)
+(defpoll QUOTE2 :interval "10s" `$HOME/.config/eww/scripts/weather.sh --quote2`)
+
+(defpoll uptime :interval "60s"
+  `$HOME/.config/eww/scripts/system.sh --uptime`)
+(defpoll shell :interval "999999999s"
+  `$HOME/.config/eww/scripts/system.sh --shell`)
+(defpoll desktop_environment :interval "999999999s"
+  `$HOME/.config/eww/scripts/system.sh --de`)
+(defpoll cpu_usage :initial 0 :interval "1s" `$HOME/.config/eww/scripts/sys-info.sh --cpu`)
+(defpoll mem_usage :initial 0 :interval "1s" `$HOME/.config/eww/scripts/sys-info.sh --mem`)
+(defpoll current_time :interval "1s" `$HOME/.config/eww/scripts/calendar.sh --time`)
+(defpoll day_of_month :interval "60s" `$HOME/.config/eww/scripts/calendar.sh --day-of-month`)
+(defpoll month :interval "60s" `$HOME/.config/eww/scripts/calendar.sh --month`)
+(defpoll year :interval "999999" `$HOME/.config/eww/scripts/calendar.sh --year`)
+(defpoll day_of_week :interval "60s" `$HOME/.config/eww/scripts/calendar.sh --day-of-week`)
+
+(defwidget system[]
+  (box :orientation "v"
+        (heading :text "󰟀  System")
+        (align-start :class "uptime" :text uptime)
+        (align-start :class "shell" :text shell)
+        (align-start :class "shell" :text desktop_environment)
+			(box :class "cpu_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconcpu" :text "󰻠")
+				(scale :min 0 :max 100 :value cpu_usage :active "false"))
+			(box :class "mem_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconmem" :text "󰍛")
+				(scale :min 0 :max 100 :value mem_usage :active "false"))
+        )
+)
+
+(defwidget mycalendar []
+  (box :orientation "v" :space-evenly false
+				(box :class "day-of-week" (label :text day_of_week))
+				(box :class "time" (align-start :text current_time))
+        (box 
+          :halign "center"
+          :valign "start"
+          :space-evenly false
+          :class "date"
+          :orientation "horizontal"
+            (box :class "day-of-month"(align-start  :text day_of_month))
+            (box :class "month" (align-start :class "month" :text month))
+            (box :class "year" (align-start :class "year" :text year))
+            )
+          (box :halign "center"
+          (calendar :class "cal"
+                 :month current-month
+    	           :year current-year))
+))
+
+(defwidget weather [] 
+	(box :class "genwin" 
+		(box :orientation "v" :spacing 10 :space-evenly "false" :vexpand "false" :hexpand "false" 
+			(box :orientation "h" :vexpand "false" :hexpand "false" 
+				(label :class "iconweather" :halign "start" :style "color: ${HEX};" :text ICON)
+				(label :class "label_temp" :halign "end" :text TEMP))
+			(box :orientation "v" :spacing 10 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "label_stat" :text STAT)
+				(label :class "label_quote" :text QUOTE)
+				(label :class "label_quote" :text QUOTE2)
+        (box :class "last_updated" :orientation "h" :halign "center" :vexpand "false" :hexpand "false" :space-evenly false 
+          (label :halign "start" :text "updated: ")
+          (label :halign "start" :text LAST_UPDATED)
+          (button :class "refresh-weather" :timeout 5000 :onclick "$HOME/.config/eww/scripts/weather.sh --getdata" "" )
+        )
+      )
+    )
+  )
+)
+
+(defwidget panel[] 
+  (box :class "panel"
+       :orientation "vertical"
+       :valign "start"
+       :halign "start"
+    (children)
+))
+
+(defwidget heading[text]
+    (label :class "heading" :text text)
+)
+
+(defwidget align-start[text]
+      (label :halign "start" :class "align-start" :text text)
+)
+
+(defwindow dashboard
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "100%"
+                               :anchor "top left")
+           :stacking "fg"
+           :windowtype "dock"
+           :exclusive false
+  (box :class "dashboard"
+    (box 
+      :halign "center"
+      :valign "start"
+      :space-evenly false
+      :orientation "horizontal"
+      (panel (system))
+      (panel  (mycalendar))
+      (panel (weather))
+    )
+))

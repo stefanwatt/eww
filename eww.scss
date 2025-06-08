@@ -1,0 +1,188 @@
+$rosewater: #f5e0dc;
+$flamingo: #f2cdcd;
+$pink: #f5c2e7;
+$mauve: #cba6f7;
+$red: #f38ba8;
+$maroon: #eba0ac;
+$peach: #fab387;
+$yellow: #f9e2af;
+$green: #a6e3a1;
+$teal: #94e2d5;
+$sky: #89dceb;
+$sapphire: #74c7ec;
+$blue: #89b4fa;
+$lavender: #b4befe;
+$text: #cdd6f4;
+$subtext1: #bac2de;
+$subtext0: #a6adc8;
+$overlay2: #9399b2;
+$overlay1: #7f849c;
+$overlay0: #6c7086;
+$surface2: #585b70;
+$surface1: #45475a;
+$surface0: #313244;
+$base: #1e1e2e;
+$mantle: #181825;
+$crust: #11111b;
+
+*{
+	font-family: "Iosevka NF", "Iosevka NFM", "icomoon-feather";
+}
+
+.dashboard {
+  background-color: rgba(15, 20, 25, 0.8);
+  color: $text;
+  padding: 10rem 10rem; 
+}
+
+.panel {
+  background-color: $base;
+  border-radius: 0.5rem;
+  border: 1px solid $surface0;
+  padding: 1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.heading {
+  font-size: 2rem;
+}
+
+.iconcpu, .iconmem, .iconbright, .iconbat {
+	font-size : 2rem;
+	font-weight : normal;
+}
+.iconcpu {
+	color: $red;
+}
+.iconmem {
+	color: $green;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough {
+	all: unset;
+	background-color: $surface1;
+	border-radius: 16px;
+	min-height: 28px;
+	min-width: 240px;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough slider {
+	background-color: $surface1;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough fill {
+  background-color: $surface1;
+}
+
+scale slider {
+  all: unset;
+  background-color: transparent;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough highlight {
+	all: unset;
+	border-radius: 16px;
+}
+
+.cpu_bar scale trough highlight {
+	background-color: $red;
+}
+.mem_bar scale trough highlight {
+	background-color: $green;
+}
+
+.stat{
+  font-size: 1.25rem;
+}
+
+.time .align-start{
+  font-size: 10rem;
+}
+
+.day-of-week{
+  font-size: 3rem;
+}
+.date {
+  font-size: 3rem;
+  .day-of-month{
+    margin-right:1rem;
+  }
+  .month{
+    margin-right:1rem;
+  }
+  margin-bottom: 3rem;
+}
+
+.cal {
+  padding: 0px 1rem;
+  color: $text;
+  background-color: $base;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 20px;
+  border: none
+}
+
+.cal:selected {
+  background-color: $overlay2;
+  color: $crust;
+}
+
+.cal.header {
+  color: $lavender;
+  font-weight: bold;
+}
+
+.cal.button {
+  color: $lavender;
+}
+
+.cal.highlight {
+  color: $mauve;
+  font-weight: bold;
+}
+
+.cal:indeterminate {
+  color: $base;
+}
+
+/** Weather ***************************************/
+.iconweather {
+	font-family: "Iosevka NF";
+	font-size : 120px;
+	font-weight : normal;
+	margin : 15px 0px 0px 30px;
+}
+
+.refresh-weather {
+  all:unset;
+  margin-left: 1rem;
+	font-family: "Iosevka NF";
+  color: $text;
+  background-color: $base;
+  border-radius: 50%;
+}
+.last_updated{
+  font-size: 13px;
+}
+
+.label_temp {
+	color : $sky;
+	font-size : 80px;
+	font-weight : bold;
+	margin : -15px 30px 0px 0px;
+}
+
+.label_stat {
+	color : $red;
+	font-size : 38px;
+	font-weight : bold;
+}
+
+.label_quote {
+	color : $text;
+	font-size : 18px;
+	font-weight : normal;
+}
+
