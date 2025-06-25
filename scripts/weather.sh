@@ -10,7 +10,7 @@ cache_weather_icon=${cache_dir}/weather-icon
 cache_weather_last_updated=${cache_dir}/last-updated
 
 ## Weather data
-KEY=$OPENWEATHERMAP_API_KEY
+KEY=$(cat ~/.weather-api-key)
 ID="2877635"
 UNIT="metric"	# Available options : 'metric' or 'imperial'
 
